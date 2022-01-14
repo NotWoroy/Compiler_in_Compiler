@@ -1,0 +1,76 @@
+import java.util.*;
+public class The_Compiler
+{
+    public static void main(String args[])
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Welcome to THE COMPILER.\n20 lines only(to save you the trouble of having an exploding computer).\nEnjoy");
+        String in[] = new String[20];
+        int value[] = new int[10];
+        String key[] = new String[10];
+        Boolean store_val= true;
+        int key_i = 0;
+        int i =0;
+        
+        String log ="";
+        
+        String line ="";
+        
+        while(true)
+        {
+            String inpu= sc.nextLine();
+            if(inpu.equalsIgnoreCase("done"))
+                break;
+            else
+            {
+                in[i] = inpu;
+                i++;
+            }
+        }
+        for(int n=0;n<i;n++)
+        {
+            line = in[n];
+            
+            //Print functions
+            if(line.startsWith("System.out.print(\"")&& line.endsWith("\");"))
+            {
+                System.out.print(line.substring(line.indexOf("\"")+1,line.lastIndexOf("\"")));
+                
+            }
+            else if(line.startsWith("System.out.println(\"")&& line.endsWith("\");"))
+            {
+                System.out.println(line.substring(line.indexOf("\"")+1,line.lastIndexOf("\"")));
+                
+            }
+            
+            //SetValue() function
+            else if(line.startsWith("SetValue(") && line.endsWith(");"))
+            {
+                String p_key = line.substring(9,line.indexOf(","));
+                String p_value = line.substring(line.indexOf(",")+1, line.length() - 2);
+                p_value = p_value.trim();
+                
+                for(int a = 0; a<=key_i; a++)
+                {
+                    if(p_key.equals(key[a]))
+                    {
+                        value[a] = Integer.valueOf(p_value);
+                        store_val = false;
+                    }
+                }
+                if(store_val)
+                {
+                    key[key_i] = p_key;
+                    value[key_i] = Integer.valueOf(p_value);
+                    key_i++;
+                }
+                store_val = true;
+            }
+            else
+                log += "(Line"+ (n+1) + " doesn't make sense) \n";
+        } 
+        System.out.println(key[0] + " = " +value[0] +key[1] + " = " +value[1]+ key[2] + " = "+ value[2] );
+        System.out.println();
+        System.out.println(log);
+    }
+}
